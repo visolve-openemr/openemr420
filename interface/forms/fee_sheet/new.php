@@ -457,6 +457,7 @@ if (isset($_POST['form_checksum'])) {
 // If Save or Save-and-Close was clicked, save the new and modified billing
 // lines; then if no error, redirect to $returnurl.
 //
+
 if (!$alertmsg && ($_POST['bn_save'] || $_POST['bn_save_close'])) {
   $main_provid = 0 + $_POST['ProviderID'];
   $main_supid  = 0 + $_POST['SupervisorID'];
@@ -501,6 +502,12 @@ if (!$alertmsg && ($_POST['bn_save'] || $_POST['bn_save_close'])) {
           "pay_amount,account_code) VALUES (?,?,?,?,?,0,now(),?,?,?,'PCP')",
           array($pid,$encounter,$ct0,$cod0,$mod0,$_SESSION['authId'],$session_id,$fee));
       }else{
+	if($del){
+		//deleting copay
+	 		sqlStatement("DELETE FROM ar_activity WHERE pid=? AND encounter=? AND session_id=?",array($pid,$encounter,$id));
+			sqlStatement("DELETE FROM ar_session WHERE session_id=?",array($id));
+		}
+	else{
         //editing copay saved to ar_session and ar_activity
         if($fee < 0){
           $fee = $fee * -1;
@@ -514,7 +521,8 @@ if (!$alertmsg && ($_POST['bn_save'] || $_POST['bn_save_close'])) {
           sqlStatement("UPDATE ar_activity SET code_type=?, code=?, modifier=?, post_user=?, post_time=now(),".
             "pay_amount=?, modified_time=now() WHERE pid=? AND encounter=? AND account_code='PCP' AND session_id=?",
             array($ct0,$cod0,$mod0,$_SESSION['authId'],$fee,$pid,$encounter,$session_id));
-        }
+         }
+	}
       }
       if(!$cod0){
         $copay_update = TRUE;
@@ -1074,7 +1082,10 @@ $resMoneyGot = sqlStatement("SELECT pay_amount as PatientPay,session_id as id,da
 while($rowMoneyGot = sqlFetchArray($resMoneyGot)){
   $PatientPay=$rowMoneyGot['PatientPay']*-1;
   $id=$rowMoneyGot['id'];
-  echoLine(++$bill_lino,'COPAY','','',$rowMoneyGot['date'],'1','','',$PatientPay,$id);
+  ++$bill_lino;
+  $bline = $_POST['bill']["$bill_lino"];
+  $del = $bline['del'];
+  echoLine($bill_lino,'COPAY','','',$rowMoneyGot['date'],'1',$del,'',$PatientPay,$id);
 }
 
 // Echo new billing items from this form here, but omit any line

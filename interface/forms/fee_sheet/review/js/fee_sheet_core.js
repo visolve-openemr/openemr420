@@ -153,9 +153,13 @@ function tag_justify_rows(display)
         if(jqElem.find("a.justify_label").length==0)
         {
             var label=jqElem.text();
+	    var str =jqElem.attr('id');
             var html=jqElem.html().substr(label.length);
             jqElem.html(html);
-            $("<a class='justify_label'>"+label+"</a>").appendTo(jqElem).on({click:justify_start}).attr("title",justify_click_title);;        
+	    if(str=="strike")
+            $("<strike><a class='justify_label'>"+label+"</a></strike>").appendTo(jqElem).on({click:justify_start}).attr("title",justify_click_title);
+	    else
+            $("<a class='justify_label'>"+label+"</a>").appendTo(jqElem).on({click:justify_start}).attr("title",justify_click_title);        
         }
     });
     var id_fields=justify_rows.find("input[type='hidden'][name$='[id]']");

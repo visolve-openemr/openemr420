@@ -134,8 +134,12 @@ function echoLine($lino, $codetype, $code, $modifier, $ndc_info='',
   $strike1 = ($id && $del) ? "<strike>" : "";
   $strike2 = ($id && $del) ? "</strike>" : "";
   echo " <tr>\n";
-  echo "  <td class='billcell'>$strike1" .
-    ($codetype == 'COPAY' ? xl($codetype) : $codetype) . $strike2;
+  $code_id = ($id && $del) ? "strike" : "";
+
+  echo "  <td class='billcell' id='$code_id'>" ;
+  if($codetype!="CPT4") echo $strike1;
+  echo   ($codetype == 'COPAY' ? xl($codetype) : $codetype) ;
+  if($codetype!="CPT4") echo $strike2;
   //if the line to ouput is copay, show the date here passed as $ndc_info,
   //since this variable is not applicable in the case of copay.
   if($codetype == 'COPAY'){

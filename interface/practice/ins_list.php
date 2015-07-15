@@ -27,14 +27,14 @@
  // search parameters passed by our opener (ins_search.php).
 
  $where = '';
- $where = addwhere($where, 'i.name'  , addSlashes($_REQUEST['form_name']));
- $where = addwhere($where, 'i.attn'  , addSlashes($_REQUEST['form_attn']));
- $where = addwhere($where, 'i.cms_id', addSlashes($_REQUEST['form_cms_id']));
- $where = addwhere($where, 'a.line1' , addSlashes($_REQUEST['form_addr1']));
- $where = addwhere($where, 'a.line2' , addSlashes($_REQUEST['form_addr2']));
- $where = addwhere($where, 'a.city'  , addSlashes($_REQUEST['form_city']));
- $where = addwhere($where, 'a.state' , addSlashes($_REQUEST['form_state']));
- $where = addwhere($where, 'a.zip'   , addSlashes($_REQUEST['form_zip']));
+ $where = addwhere($where, 'i.name'  , formData($_REQUEST['form_name'],'P'));
+ $where = addwhere($where, 'i.attn'  , formData($_REQUEST['form_attn'],'P'));
+ $where = addwhere($where, 'i.cms_id', formData($_REQUEST['form_cms_id'],'P'));
+ $where = addwhere($where, 'a.line1' , formData($_REQUEST['form_addr1'],'P'));
+ $where = addwhere($where, 'a.line2' , formData($_REQUEST['form_addr2'],'P'));
+ $where = addwhere($where, 'a.city'  , formData($_REQUEST['form_city'],'P'));
+ $where = addwhere($where, 'a.state' , formData($_REQUEST['form_state'],'P'));
+ $where = addwhere($where, 'a.zip'   , formData($_REQUEST['form_zip'],'P'));
 
  $phone_parts = array();
 

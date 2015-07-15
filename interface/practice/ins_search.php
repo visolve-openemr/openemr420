@@ -159,7 +159,7 @@ td { font-size:10pt; }
  //
  if ($_POST['form_save']) {
   $ins_id = '';
-  $ins_name = addSlashes($_POST['form_name']);
+  $ins_name = formData($_POST['form_name'],'P');
 
   if ($ins_id) {
    // sql for updating could go here if this script is enhanced to support
@@ -172,23 +172,23 @@ td { font-size:10pt; }
     ") VALUES ( " .
     $ins_id                         . ", "  .
     "'" . $ins_name                 . "', " .
-    "'" . addSlashes($_POST['form_attn'])       . "', " .
-    "'" . addSlashes($_POST['form_cms_id'])     . "', " .
-    "'" . addSlashes($_POST['form_freeb_type']) . "', " .
-    "'" . addSlashes($_POST['form_partner'])    . "', " .
-    "'" . addSlashes($_POST['form_partner'])    . "' "  .
+    "'" . formData($_POST['form_attn'],'P')       . "', " .
+    "'" . formData($_POST['form_cms_id'],'P')     . "', " .
+    "'" . formData($_POST['form_freeb_type'],'P') . "', " .
+    "'" . formData($_POST['form_partner'],'P')    . "', " .
+    "'" . formData($_POST['form_partner'],'P')    . "' "  .
    ")");
 
    sqlInsert("INSERT INTO addresses ( " .
     "id, line1, line2, city, state, zip, country, foreign_id " .
     ") VALUES ( " .
     generate_id()                . ", "  .
-    "'" . addSlashes($_POST['form_addr1'])   . "', " .
-    "'" . addSlashes($_POST['form_addr2'])   . "', " .
-    "'" . addSlashes($_POST['form_city'])    . "', " .
-    "'" . addSlashes($_POST['form_state'])   . "', " .
-    "'" . addSlashes($_POST['form_zip'])     . "', " .
-    "'" . addSlashes($_POST['form_country']) . "', " .
+    "'" . formData($_POST['form_addr1'],'P')   . "', " .
+    "'" . formData($_POST['form_addr2'],'P')   . "', " .
+    "'" . formData($_POST['form_city'],'P')    . "', " .
+    "'" . formData($_POST['form_state'],'P')   . "', " .
+    "'" . formData($_POST['form_zip'],'P')     . "', " .
+    "'" . formData($_POST['form_country'],'P') . "', " .
     $ins_id                      . " "   .
    ")");
 
@@ -201,9 +201,9 @@ td { font-size:10pt; }
     ") VALUES ( " .
     generate_id()         . ", "  .
     "'+1'"                . ", "  .
-    "'" . addSlashes($phone_parts[1]) . "', " .
-    "'" . addSlashes($phone_parts[2]) . "', " .
-    "'" . addSlashes($phone_parts[3]) . "', " .
+    "'" . formData($phone_parts[1],'P') . "', " .
+    "'" . formData($phone_parts[2],'P') . "', " .
+    "'" . formData($phone_parts[3],'P') . "', " .
     "'2'"                 . ", "  .
     $ins_id               . " "   .
    ")");

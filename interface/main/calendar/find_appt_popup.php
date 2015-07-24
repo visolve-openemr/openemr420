@@ -243,10 +243,9 @@
   for ($j = $ckindex; $j < $ckindex + $evslots; ++$j) {
       if ($slots[$j] >= 4) {
 		$ckavail = false;
+		$isProv = FALSE;
 		if(isset($prov[$j])){
-			$alertmsg = 'Provider not available';
-		} else {
-			$alertmsg = 'This appointment slot is already used';
+			$isProv = 'TRUE';
 		}
 	}
   }
@@ -459,14 +458,22 @@ $(document).ready(function(){
 });
 
 <?php if (!$ckavail) { ?>
-<?php if (acl_check('patients','appt','','write')) { ?>
- if (confirm('<?php echo addslashes(xl($alertmsg.', use it anyway?')); ?>')) {
+<?php if (acl_check('patients','appt','','write')) {
+if($isProv): ?>
+ if (confirm('<?php echo addslashes(xl('Provider not available, use it anyway?')); ?>')) {
+<?php else: ?>
+ if (confirm('<?php echo addslashes(xl('This appointment slot is already used, use it anyway?')); ?>')) {
+<?php endif; ?>
   opener.top.restoreSession();
   opener.document.forms[0].submit();
   window.close();
  }
-<?php } else { ?>
- alert('<?php echo addslashes(xl($alertmsg.', please choose another.')); ?>');
+<?php } else { 
+if($isProv): ?>
+ alert('<?php echo addslashes(xl('Provider not available, please choose another.')); ?>');
+<?php else: ?>
+ alert('<?php echo addslashes(xl('This appointment slot is already used, please choose another.')); ?>');
+<?php endif; ?>
 <?php } ?>
 <?php } ?>
 

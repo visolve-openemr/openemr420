@@ -171,24 +171,24 @@ td { font-size:10pt; }
     "id, name, attn, cms_id, freeb_type, x12_receiver_id, x12_default_partner_id " .
     ") VALUES ( " .
     $ins_id                         . ", "  .
-    "'" . add_escape_custom($ins_name)                 . "', " .
-    "'" . add_escape_custom($_POST['form_attn'])       . "', " .
-    "'" . add_escape_custom($_POST['form_cms_id'])     . "', " .
-    "'" . add_escape_custom($_POST['form_freeb_type']) . "', " .
-    "'" . add_escape_custom($_POST['form_partner'])    . "', " .
-    "'" . add_escape_custom($_POST['form_partner'])    . "' "  .
+    "'" . $ins_name                 . "', " .
+    "'" . $_POST['form_attn']       . "', " .
+    "'" . $_POST['form_cms_id']     . "', " .
+    "'" . $_POST['form_freeb_type'] . "', " .
+    "'" . $_POST['form_partner']    . "', " .
+    "'" . $_POST['form_partner']    . "' "  .
    ")");
 
    sqlInsert("INSERT INTO addresses ( " .
     "id, line1, line2, city, state, zip, country, foreign_id " .
     ") VALUES ( " .
     generate_id()                . ", "  .
-    "'" . add_escape_custom($_POST['form_addr1'])   . "', " .
-    "'" . add_escape_custom($_POST['form_addr2'])   . "', " .
-    "'" . add_escape_custom($_POST['form_city'])    . "', " .
-    "'" . add_escape_custom($_POST['form_state'])   . "', " .
-    "'" . add_escape_custom($_POST['form_zip'])     . "', " .
-    "'" . add_escape_custom($_POST['form_country']) . "', " .
+    "'" . $_POST['form_addr1']   . "', " .
+    "'" . $_POST['form_addr2']   . "', " .
+    "'" . $_POST['form_city']    . "', " .
+    "'" . $_POST['form_state']   . "', " .
+    "'" . $_POST['form_zip']     . "', " .
+    "'" . $_POST['form_country'] . "', " .
     $ins_id                      . " "   .
    ")");
 
@@ -201,9 +201,9 @@ td { font-size:10pt; }
     ") VALUES ( " .
     generate_id()         . ", "  .
     "'+1'"                . ", "  .
-    "'" . add_escape_custom($phone_parts[1]) . "', " .
-    "'" . add_escape_custom($phone_parts[2]) . "', " .
-    "'" . add_escape_custom($phone_parts[3]) . "', " .
+    "'" . $phone_parts[1] . "', " .
+    "'" . $phone_parts[2] . "', " .
+    "'" . $phone_parts[3] . "', " .
     "'2'"                 . ", "  .
     $ins_id               . " "   .
    ")");

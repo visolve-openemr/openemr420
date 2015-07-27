@@ -159,7 +159,7 @@ td { font-size:10pt; }
  //
  if ($_POST['form_save']) {
   $ins_id = '';
-  $ins_name = formData($_POST['form_name'],'P');
+  $ins_name = $_POST['form_name'];
 
   if ($ins_id) {
    // sql for updating could go here if this script is enhanced to support
@@ -172,23 +172,23 @@ td { font-size:10pt; }
     ") VALUES ( " .
     $ins_id                         . ", "  .
     "'" . $ins_name                 . "', " .
-    "'" . formData($_POST['form_attn'],'P')       . "', " .
-    "'" . formData($_POST['form_cms_id'],'P')     . "', " .
-    "'" . formData($_POST['form_freeb_type'],'P') . "', " .
-    "'" . formData($_POST['form_partner'],'P')    . "', " .
-    "'" . formData($_POST['form_partner'],'P')    . "' "  .
+    "'" . $_POST['form_attn']       . "', " .
+    "'" . $_POST['form_cms_id']     . "', " .
+    "'" . $_POST['form_freeb_type'] . "', " .
+    "'" . $_POST['form_partner']    . "', " .
+    "'" . $_POST['form_partner']    . "' "  .
    ")");
 
    sqlInsert("INSERT INTO addresses ( " .
     "id, line1, line2, city, state, zip, country, foreign_id " .
     ") VALUES ( " .
     generate_id()                . ", "  .
-    "'" . formData($_POST['form_addr1'],'P')   . "', " .
-    "'" . formData($_POST['form_addr2'],'P')   . "', " .
-    "'" . formData($_POST['form_city'],'P')    . "', " .
-    "'" . formData($_POST['form_state'],'P')   . "', " .
-    "'" . formData($_POST['form_zip'],'P')     . "', " .
-    "'" . formData($_POST['form_country'],'P') . "', " .
+    "'" . $_POST['form_addr1']   . "', " .
+    "'" . $_POST['form_addr2']   . "', " .
+    "'" . $_POST['form_city']    . "', " .
+    "'" . $_POST['form_state']   . "', " .
+    "'" . $_POST['form_zip']     . "', " .
+    "'" . $_POST['form_country'] . "', " .
     $ins_id                      . " "   .
    ")");
 
@@ -201,9 +201,9 @@ td { font-size:10pt; }
     ") VALUES ( " .
     generate_id()         . ", "  .
     "'+1'"                . ", "  .
-    "'" . formData($phone_parts[1],'P') . "', " .
-    "'" . formData($phone_parts[2],'P') . "', " .
-    "'" . formData($phone_parts[3],'P') . "', " .
+    "'" . $phone_parts[1] . "', " .
+    "'" . $phone_parts[2] . "', " .
+    "'" . $phone_parts[3] . "', " .
     "'2'"                 . ", "  .
     $ins_id               . " "   .
    ")");

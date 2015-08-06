@@ -19,7 +19,15 @@ $returnurl = $GLOBALS['concurrent_layout'] ? 'encounter_top.php' : 'patient_enco
 if ($_POST['confirm']) {
     // set the deleted flag of the indicated form
     $sql = "update forms set deleted=1 where id=".$_POST['id'];
-    if ($_POST['id'] != "*" && $_POST['id'] != '') sqlInsert($sql);
+    if ($_POST['id'] != "*" && $_POST['id'] != '') 
+    {
+	sqlInsert($sql);
+	if($_REQUEST["formname"]=="procedure_order"){
+		$formid = sqlQuery("select form_id from forms where id=?",array($_POST['id']));
+		sqlQuery("delete from procedure_order where procedure_order_id=?",array($formid['form_id']));
+		sqlQuery("delete from procedure_order_code where procedure_order_id=?",array($formid['form_id']));
+	}
+    }
     // log the event   
     newEvent("delete", $_SESSION['authUser'], $_SESSION['authProvider'], 1, "Form ".$_POST['formname']." deleted from Encounter ".$_POST['encounter']);
 

@@ -107,7 +107,6 @@ function submitList(offset) {
  f.fstart.value = i;
  f.submit();
 }
-
 </script>
 
 </head>
@@ -151,7 +150,12 @@ foreach ($_REQUEST as $key => $value) {
   echo "<input type='hidden' name='".htmlspecialchars( $key, ENT_QUOTES)."' value='".htmlspecialchars( $value, ENT_QUOTES)."' />\n";
   ++$numfields;
 }
-
+//Date of Birth checking
+$currentdate=date("Y-m-d");
+$dobcheck=false;
+//Checked for Non zero values in date, month&date range values validated 
+if((substr($_REQUEST[mf_DOB],0,4)>0) || (substr($_REQUEST[mf_DOB],5,2)>0) || (substr($$_REQUEST[mf_DOB],5,2)<=12) || (substr($_REQUEST[mf_DOB],8,2)>0) || (substr($_REQUEST[mf_DOB],8,2)<=31) || ($_REQUEST[mf_DOB]>$currentdate))
+	$dobcheck=true;
 $sql = "SELECT *, ( $relevance ) AS relevance, " .
   "DATE_FORMAT(DOB,'%m/%d/%Y') as DOB_TS " .
   "FROM patient_data WHERE $where " .
@@ -253,7 +257,7 @@ if ($result) {
 </div>  <!-- end searchResults DIV -->
 
 <center>
-<?php if ($pubpid_matched) { ?>
+<?php if ($pubpid_matched ||$dobcheck){ ?>
 <input type='button' value='<?php echo htmlspecialchars( xl('Cancel'), ENT_QUOTES); ?>'
  onclick='window.close();' />
 <?php } else { ?>
@@ -296,7 +300,11 @@ else {
 var f = opener.document.forms[0];
 <?php if ($pubpid_matched) { ?>
 alert('<?php echo htmlspecialchars( xl('A patient with this ID already exists.'), ENT_QUOTES); ?>')
-<?php } else { ?>
+<?php }
+elseif($dobcheck){?>
+alert('<?php echo htmlspecialchars( xl('Enter a Valid DOB.'), ENT_QUOTES); ?>')
+<?php }
+else { ?>
 opener.force_submit = true;
 f.create.value = '<?php echo htmlspecialchars( xl('Confirm Create New Patient'), ENT_QUOTES); ?>';
 <?php } ?>
@@ -309,4 +317,5 @@ $("<td><?php echo htmlspecialchars( xl('No matches were found.'), ENT_QUOTES); ?
 
 </body>
 </html>
+
 

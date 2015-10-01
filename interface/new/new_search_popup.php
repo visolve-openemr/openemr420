@@ -18,7 +18,7 @@ $fake_register_globals=false;
 require_once("../globals.php");
 require_once("$srcdir/patient.inc");
 require_once("$srcdir/formdata.inc.php");
-$inf=date("Y-m-d");
+
 $fstart = $_REQUEST['fstart'] + 0;
 
 $searchcolor = empty($GLOBALS['layout_search_color']) ?
@@ -107,6 +107,7 @@ function submitList(offset) {
  f.fstart.value = i;
  f.submit();
 }
+
 </script>
 
 </head>
@@ -150,9 +151,6 @@ foreach ($_REQUEST as $key => $value) {
   echo "<input type='hidden' name='".htmlspecialchars( $key, ENT_QUOTES)."' value='".htmlspecialchars( $value, ENT_QUOTES)."' />\n";
   ++$numfields;
 }
-$dobcheck=false;
-if($_REQUEST[mf_DOB] > $inf)
-	$dobcheck=true;
 
 $sql = "SELECT *, ( $relevance ) AS relevance, " .
   "DATE_FORMAT(DOB,'%m/%d/%Y') as DOB_TS " .
@@ -255,7 +253,7 @@ if ($result) {
 </div>  <!-- end searchResults DIV -->
 
 <center>
-<?php if ($pubpid_matched ||$dobcheck){ ?>
+<?php if ($pubpid_matched) { ?>
 <input type='button' value='<?php echo htmlspecialchars( xl('Cancel'), ENT_QUOTES); ?>'
  onclick='window.close();' />
 <?php } else { ?>
@@ -298,11 +296,7 @@ else {
 var f = opener.document.forms[0];
 <?php if ($pubpid_matched) { ?>
 alert('<?php echo htmlspecialchars( xl('A patient with this ID already exists.'), ENT_QUOTES); ?>')
-<?php }
-elseif($dobcheck){?>
-alert('<?php echo htmlspecialchars( xl('Enter a valid DOB.'), ENT_QUOTES); ?>')
-<?php }
-else { ?>
+<?php } else { ?>
 opener.force_submit = true;
 f.create.value = '<?php echo htmlspecialchars( xl('Confirm Create New Patient'), ENT_QUOTES); ?>';
 <?php } ?>
@@ -315,5 +309,4 @@ $("<td><?php echo htmlspecialchars( xl('No matches were found.'), ENT_QUOTES); ?
 
 </body>
 </html>
-
 

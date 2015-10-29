@@ -474,7 +474,7 @@ if ($_POST['form_action'] == "save") {
         // ====================================
         // single provider
         // ====================================
-        } elseif ( !$row['pc_multiple'] ) {
+        } elseif ( !$row['pc_multiple']  || 1 ) {
             if ( $GLOBALS['select_multi_providers'] ) {
                 $prov = $_POST['form_provider'][0];
             } else {

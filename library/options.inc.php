@@ -2705,6 +2705,14 @@ function get_layout_form_value($frow, $prefix='form_') {
 	    $i++;
 	  }
     }
+    //ViSolve: Fix to save and display the Code description when Option "2" is selected
+    else if($data_type == 15) {
+    	$options    = $frow['edit_options'];
+    	if($options == "2"){
+    		$field_id .= "__desc";
+    		$value = $_POST["$prefix$field_id"];
+    	}
+    }
     else {
       $value = $_POST["$prefix$field_id"];
     }

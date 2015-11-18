@@ -8,6 +8,7 @@
 
 include_once(dirname(__FILE__).'/../../globals.php');
 include_once($GLOBALS["srcdir"] . "/api.inc");
+require_once($GLOBALS["srcdir"] . "/options.inc.php");
 
 // This function is invoked from printPatientForms in report.inc
 // when viewing a "comprehensive patient report".  Also from

@@ -2705,14 +2705,6 @@ function get_layout_form_value($frow, $prefix='form_') {
 	    $i++;
 	  }
     }
-    //ViSolve: Fix to save and display the Code description when Option "2" is selected
-    else if($data_type == 15) {
-    	$options    = $frow['edit_options'];
-    	if($options == "2"){
-    		$field_id .= "__desc";
-    		$value = $_POST["$prefix$field_id"];
-    	}
-    }
     else {
       $value = $_POST["$prefix$field_id"];
     }
@@ -3076,7 +3068,14 @@ function lbf_current_value($frow, $formid, $encounter) {
     // This is a normal form field.
     $ldrow = sqlQuery("SELECT field_value FROM lbf_data WHERE " .
       "form_id = ? AND field_id = ?", array($formid, $field_id) );
-    if (!empty($ldrow)) $currvalue = $ldrow['field_value'];
+    if (!empty($ldrow)){ 
+    	//ViSolve: Fix to display the Code description when Option "2" is selected
+    	if($frow['data_type']=="15" && $frow['edit_options'] == "2"){
+    		$currvalue = lookup_code_descriptions($ldrow['field_value']); 
+    	}else{
+    		$currvalue = $ldrow['field_value'];
+    	}
+    }
   }
   else {
     // New form, see if there is a custom default from a plugin.
